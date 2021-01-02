@@ -21,6 +21,25 @@
 <main class="container">
     <div class="comtainer">
         <h2>게시판</h2>
+        <div>총 건수 : <span th:text="${#lists.size(boards)}">0</span> 건 </div>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Title</th>
+                <th scope="col">Contents</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="boards: ${boards}">
+                <th scope="row" th:text="${boards.id}">1</th>
+                <td th:text="${boards.title}">Mark</td>
+                <td th:text="${boards.contents}">Otto</td>
+            </tr>
+            </tbody>
+        </table>
+
     </div>
 </main><!-- /.container -->
 

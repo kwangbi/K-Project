@@ -1,6 +1,6 @@
 server:
   port: 8090
-  
+
 #Actuator
 management:
   endpoint:
@@ -12,21 +12,34 @@ management:
     web:
       exposure:
         include:
-        - health
-        - info
+          - health
+          - info
 
 # thymeleaf option
 spring:
   thymeleaf:
     cache: false
     mode: HTML
-# devtools
+  # devtools
   devtools:
     livereload:
       enabled: true
     restart:
       enabled: true
-
+  #MariaDB
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://ec2-3-34-124-41.ap-northeast-2.compute.amazonaws.com:36091/yang
+    username: kwangbi
+    password: ENC(0tJeTgxpxu+g0qaeHt1DqQ==) # 암호화 설정
+  #JPA Option
+  jpa:
+    open-in-view: false
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  #Security
   security:
     user:
       name: admin
