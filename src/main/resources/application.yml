@@ -29,7 +29,7 @@ spring:
   #MariaDB
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://ec2-3-34-124-41.ap-northeast-2.compute.amazonaws.com:36091/yang
+    url: jdbc:mariadb://ec2-54-180-152-11.ap-northeast-2.compute.amazonaws.com:36091/yang
     username: kwangbi
     password: ENC(0tJeTgxpxu+g0qaeHt1DqQ==) # 암호화 설정
   #JPA Option
