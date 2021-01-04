@@ -21,7 +21,21 @@
 <main class="container">
     <div>
         <h2>게시판</h2>
-        <div>총 건수 : <span th:text="${#lists.size(boards)}">0</span> 건 </div>
+        <div>총 건수 : <span th:text="${boards.totalElements}">0</span> 건</div>
+
+        <form class="form-inline d-flex justify-content-end" method="get" th:action="@{/board/list}">
+            <div class="row g-3 align-items-center">
+                <div class="col-auto">
+                    <label for="searchText" class="col-form-label">검색</label>
+                </div>
+                <div class="col-auto">
+                    <input type="text" id="searchText" name="searchText" class="form-control"
+                           aria-describedby="passwordHelpInline" th:value="${param.searchText}">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-light mb-2">검색</button>
+        </form>
+
 
         <table class="table table-striped">
             <thead>
@@ -34,12 +48,30 @@
             <tbody>
             <tr th:each="boards: ${boards}">
                 <th scope="row" th:text="${boards.id}">1</th>
-                <td ><a href="#" th:text="${boards.title}" th:href="@{/board/form(id=${boards.id})}">title</a></td>
+                <td><a href="#" th:text="${boards.title}" th:href="@{/board/form(id=${boards.id})}">title</a></td>
                 <td th:text="${boards.content}">content</td>
             </tr>
             </tbody>
         </table>
-        <div class="text-right">
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item " th:classappend="${1 == boards.pageable.pageNumber + 1} ? 'disabled'">
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true"
+                       th:href="@{/board/list(page=${boards.pageable.pageNumber - 1},searchText=${param.searchText})}">Previous</a>
+                </li>
+                <li class="page-item" th:classappend="${i == boards.pageable.pageNumber + 1} ? 'disabled'"
+                    th:each="i : ${#numbers.sequence(startPage,endPage)}">
+                    <a class="page-link" href="#" th:text="${i}" th:href="@{/board/list(page=${i-1},searchText=${param.searchText})}">1</a></li>
+                <li class="page-item"
+                    th:classappend="${boards.totalPages == boards.pageable.pageNumber + 1} ? 'disabled'">
+                    <a class="page-link" href="#"
+                       th:href="@{/board/list(page=${boards.pageable.pageNumber + 1},searchText=${param.searchText})}">Next</a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="d-flex justify-content-end">
             <a class="btn btn-primary" href="#" role="button" th:href="@{/board/form}">쓰기</a>
         </div>
 

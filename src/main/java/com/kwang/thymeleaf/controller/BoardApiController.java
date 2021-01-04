@@ -3,6 +3,7 @@ package com.kwang.thymeleaf.controller;
 import com.kwang.thymeleaf.BoardException.BoardNotFoundException;
 import com.kwang.thymeleaf.model.Board;
 import com.kwang.thymeleaf.repository.BoardRepository;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.util.StringUtils;
 
@@ -36,7 +37,7 @@ public class BoardApiController {
     }
 
     @PutMapping("/board/{id}")
-    Board replaceBoard(Board NewBoard,@PathVariable Long id){
+    Board replaceBoard(@RequestBody Board NewBoard,@PathVariable Long id){
         return boardRepository.findById(id).map(board->{
             board.setTitle(NewBoard.getTitle());
             board.setContent(NewBoard.getContent());
