@@ -25,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     httpSecurity.cors().and().csrf().disable();
 
     httpSecurity.authorizeRequests()
-                    .antMatchers("/","/account/register","/css/**")
+                    .antMatchers("/","/firebase/**","api/**","/account/register","/css/**")
                     .permitAll()
                     .anyRequest()
                     .authenticated()

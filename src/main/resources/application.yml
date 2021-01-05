@@ -39,6 +39,12 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          lob:
+            non_contextual_creation: true
   #Security
   security:
     user:
@@ -49,6 +55,15 @@ spring:
 jasypt:
   encryptor:
     bean: jasyptStringEncryptor
-    
 
-  
+# Log
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql=tracespring:
+              jpa:
+                show-sql: TRACE
+            sql: TRACE

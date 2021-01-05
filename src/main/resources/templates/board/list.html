@@ -26,14 +26,11 @@
         <form class="form-inline d-flex justify-content-end" method="get" th:action="@{/board/list}">
             <div class="row g-3 align-items-center">
                 <div class="col-auto">
-                    <label for="searchText" class="col-form-label">검색</label>
-                </div>
-                <div class="col-auto">
                     <input type="text" id="searchText" name="searchText" class="form-control"
                            aria-describedby="passwordHelpInline" th:value="${param.searchText}">
                 </div>
             </div>
-            <button type="submit" class="btn btn-light mb-2">검색</button>
+            <button type="submit" class="btn btn-light mb-2 ml-2">검색</button>
         </form>
 
 
@@ -43,6 +40,7 @@
                 <th scope="col">ID</th>
                 <th scope="col">Title</th>
                 <th scope="col">Contents</th>
+                <th scope="col">UserName</th>
             </tr>
             </thead>
             <tbody>
@@ -50,6 +48,7 @@
                 <th scope="row" th:text="${boards.id}">1</th>
                 <td><a href="#" th:text="${boards.title}" th:href="@{/board/form(id=${boards.id})}">title</a></td>
                 <td th:text="${boards.content}">content</td>
+                <td th:text="${boards.user.username}">홍길동</td>
             </tr>
             </tbody>
         </table>

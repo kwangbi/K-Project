@@ -2,10 +2,12 @@ package com.kwang.thymeleaf.controller;
 
 import com.kwang.thymeleaf.model.Board;
 import com.kwang.thymeleaf.repository.BoardRepository;
+import com.kwang.thymeleaf.service.BoardService;
 import com.kwang.thymeleaf.validator.BoardValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -14,11 +16,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Controller
 @RequestMapping("/board")
 public class BoardController {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private BoardRepository boardRepository;
@@ -26,15 +29,14 @@ public class BoardController {
     @Autowired
     private BoardValidator boardValidator;
 
+    @Autowired
+    private BoardService boardService;
+
     @GetMapping("/list")
     public String list(Model model,@PageableDefault(size = 3) Pageable pageable
             ,@RequestParam(required = false,defaultValue = "") String searchText){
 
-        //List<Board> boards = boardRepository.findAll();
-
-        //Page<Board> boards = boardRepository.findAll(pageable);
-
-        Page<Board> boards = boardRepository.findByTitleContainingOrContentContaining(searchText,searchText,pageable);
+        Page<Board> boards = boardRepository.findByTitleContainingOrContentContainingOrderByIdDesc(searchText,searchText,pageable);
 
         int startPage = Math.max(1,boards.getPageable().getPageNumber() - 4);
         int endPage = Math.min(boards.getTotalPages(),boards.getPageable().getPageNumber() + 4);
@@ -66,7 +68,8 @@ public class BoardController {
         if(bindingResult.hasErrors()){
             return "board/form";
         }
-        boardRepository.save(board);
+
+        boardService.save(board);
         return "redirect:/board/list";
     }
 

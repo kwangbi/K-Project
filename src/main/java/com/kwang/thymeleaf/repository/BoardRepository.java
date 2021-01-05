@@ -21,6 +21,7 @@ public interface BoardRepository extends JpaRepository<Board,Long> {
     // 제목 and 내용 검색
     List<Board> findByTitleAndContent(String title,String content);
 
-    Page<Board> findByTitleContainingOrContentContaining(String title, String content, Pageable pageable);
+    // OrderByIdDesc : id 기준 오름차순 정렬
+    Page<Board> findByTitleContainingOrContentContainingOrderByIdDesc(String title, String content, Pageable pageable);
 
 }
